@@ -1,5 +1,6 @@
 {
   "name": "waiterapp-api",
+  "type": "module",
   "packageManager": "yarn@4.10.3",
   "scripts": {
     "build": "tsc"
@@ -7,9 +8,12 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/express": "^5.0.6",
+    "@types/node": "^22.0.0",
     "eslint": "^10.0.3",
     "globals": "^17.4.0",
     "jiti": "^2.6.1",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.0"
   },
