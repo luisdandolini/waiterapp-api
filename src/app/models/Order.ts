@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 
-export const Model = model(
-  "Model",
+export const Order = model(
+  "Order",
   new Schema({
     table: {
       type: String,
@@ -17,18 +17,20 @@ export const Model = model(
       default: Date.now,
     },
     products: {
-      required: true,
       type: [
         {
-          product: Schema.Types.ObjectId,
-          required: true,
-          ref: "Product",
+          product: {
+            type: Schema.Types.ObjectId,
+            ref: "Product",
+            required: true,
+          },
+          quantity: {
+            type: Number,
+            default: 1,
+          },
         },
       ],
-      quantity: {
-        type: Number,
-        default: 1,
-      },
+      required: true,
     },
   }),
 );
