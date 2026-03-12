@@ -29,6 +29,7 @@ MONGO_URI=mongodb://mongo:27017/waiterapp
 ## Rodando com Docker
 
 ```bash
+cp .env.example .env
 docker compose up
 ```
 
