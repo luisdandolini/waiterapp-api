@@ -4,7 +4,8 @@
   "packageManager": "yarn@4.10.3",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon --exec tsx src/index.ts"
+    "dev": "nodemon --exec tsx src/index.ts",
+    "start": "node dist"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
