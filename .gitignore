@@ -17,6 +17,9 @@ dist
 #!.yarn/cache
 .pnp.*
 
+# Env
+.env
+
 # Uploads
 uploads/*
 !uploads/.gitkeep

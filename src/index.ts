@@ -8,8 +8,10 @@ import { router } from "./router.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const MONGO_URI = process.env.MONGO_URI ?? "mongodb://localhost:27017";
+
 mongoose
-  .connect("mongodb://localhost:27017")
+  .connect(MONGO_URI)
   .then(() => {
     const app = express();
     const port = 3001;
