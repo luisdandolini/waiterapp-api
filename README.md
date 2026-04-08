@@ -1,12 +1,13 @@
 # WaiterApp API
 
-REST API para gerenciamento de pedidos de restaurante, construída com Node.js, Express e MongoDB.
+REST API com suporte a tempo real para gerenciamento de pedidos de restaurante, construída com Node.js, Express e MongoDB.
 
 ## Tecnologias
 
 - **Node.js** com **TypeScript**
 - **Express 5**
 - **MongoDB** com **Mongoose**
+- **Socket.IO** (comunicação em tempo real)
 - **Multer** (upload de imagens)
 - **TSX** + **Nodemon** (desenvolvimento)
 
@@ -59,6 +60,7 @@ yarn dev
 | `GET` | `/categories` | Lista todas as categorias |
 | `POST` | `/categories` | Cria uma nova categoria |
 | `DELETE` | `/categories/:id` | Remove uma categoria |
+| `GET` | `/categories/:categoryId/products` | Lista produtos de uma categoria |
 
 **POST /categories — body:**
 ```json
@@ -75,8 +77,18 @@ yarn dev
 | Método | Rota | Descrição |
 |---|---|---|
 | `GET` | `/products` | Lista todos os produtos |
-| `POST` | `/products` | Cria um novo produto |
-| `GET` | `/products/:categoryId/products` | Lista produtos por categoria |
+| `POST` | `/products` | Cria um novo produto (multipart/form-data) |
+
+**POST /products — campos:**
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `name` | string | Nome do produto |
+| `description` | string | Descrição do produto |
+| `price` | number | Preço |
+| `category` | string | ID da categoria |
+| `ingredients` | string (JSON) | Array de ingredientes |
+| `image` | file | Imagem do produto |
 
 ---
 
@@ -94,20 +106,35 @@ yarn dev
 WAITING → IN_PRODUCTION → DONE
 ```
 
+## Eventos WebSocket
+
+| Evento | Direção | Descrição |
+|---|---|---|
+| `orders@new` | Servidor → Cliente | Emitido quando um novo pedido é criado |
+
 ## Estrutura de pastas
 
 ```
 src/
-├── index.ts               # Inicialização do servidor e conexão com o banco
-├── router.ts              # Definição das rotas
+├── index.ts               # Inicialização do servidor, Socket.IO e conexão com o banco
+├── router.ts              # Definição das rotas e configuração do Multer
 └── app/
     ├── models/            # Schemas do Mongoose
     │   ├── Category.ts
     │   ├── Product.ts
     │   └── Order.ts
     └── useCases/          # Lógica de negócio por recurso
-        └── categories/
-            ├── listCategories.ts
-            ├── createCategory.ts
-            └── deleteCategory.ts
+        ├── categories/
+        │   ├── listCategories.ts
+        │   ├── createCategory.ts
+        │   ├── deleteCategory.ts
+        │   └── listProductsByCategory.ts
+        ├── products/
+        │   ├── listProducts.ts
+        │   └── createProduct.ts
+        └── orders/
+            ├── listOrders.ts
+            ├── createOrder.ts
+            ├── changeOrderStatus.ts
+            └── deleteOrder.ts
 ```
